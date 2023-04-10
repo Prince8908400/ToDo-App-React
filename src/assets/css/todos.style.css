@@ -1,0 +1,98 @@
+.todo__list {
+  list-style: none;
+  color: black;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.todo__list li {
+  display: flex;
+  align-items: center;
+}
+
+.todo__list li .editIcon {
+  cursor: pointer;
+  padding: 12px;
+  color: rgb(98, 98, 255);
+  border-right: 1px solid gray;
+  border-left: 1px solid gray;
+}
+
+.todo__list li .deleteIcon {
+  cursor: pointer;
+  padding: 12px;
+  color: rgb(255, 82, 82);
+}
+
+#check {
+  margin: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.task {
+  font-size: 12px;
+  padding: 12px;
+  border-radius: 0;
+  display: flex;
+  flex: 1;
+  border: none;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  text-align: justify;
+}
+
+.todo__list li {
+  margin-top: 1px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  -webkit-box-shadow: 5px 5px 5px 2px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 5px 5px 5px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 5px 5px 5px 2px rgba(0, 0, 0, 0.4);
+}
+
+.todo__list li:first-child {
+  border-top-left-radius: 5px;
+}
+
+.todo__list li:last-child {
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.completed {
+  text-decoration: line-through;
+  background: #d3d1d1;
+  opacity: 0.5;
+}
+
+.date__box {
+  max-width: 100%;
+  margin: 0 10px;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 12px;
+  padding: 10px;
+}
+
+.overdue__date {
+  background-color: #eb5a46;
+  color: #fff;
+}
+
+.leftfordue__date {
+  background-color: #61bd4f;
+  color: #fff;
+}
+
+p {
+  max-width: 100%;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
