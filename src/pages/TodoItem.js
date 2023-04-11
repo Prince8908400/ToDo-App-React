@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 
 // fontAwesomeIcons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit,
+  faInfoCircle,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 
 // component
 import Input from "../components/Input";
 
+// bootstrap
+import Overlay from "react-bootstrap/Overlay";
+import Tooltip from "react-bootstrap/Tooltip";
+
+// helper functions
+import { formattedDate, makeShortText } from "../utility/helper";
+
 const TodoItem = ({ todo, toggleTodoItem, updateTodoItem, handleShow }) => {
-  const formattedDate = (dateString) => {
-    const options = { year: "numeric", month: "short", day: "numeric" };
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", options);
+  
+  const [show, setShow] = useState(false);
+  const target = useRef(null);
+
+  const handleHideTooltip = () => {
+    setShow(false);
   };
 
   return (
@@ -22,15 +35,42 @@ const TodoItem = ({ todo, toggleTodoItem, updateTodoItem, handleShow }) => {
         onChange={() => toggleTodoItem(todo?.todo_id)}
         checked={todo?.completed ? true : false}
       />
-      <p className={`task truncate ${todo?.completed ? "completed" : ""}`}>
-        {todo?.task}
+      <Overlay
+        rootClose={true}
+        rootCloseEvent="mousedown"
+        trigger="click"
+        target={target.current}
+        show={show}
+        placement="right"
+        onHide={handleHideTooltip}
+      >
+        {(props) => (
+          <Tooltip id="overlay-example" {...props}>
+            {todo?.task}
+          </Tooltip>
+        )}
+      </Overlay>
+      <p className={`task ${todo?.completed ? "completed" : ""}`}>
+        {makeShortText(todo?.task)}
+        {todo?.task?.length > 85 && (
+          <FontAwesomeIcon
+            className="info__icon"
+            icon={faInfoCircle}
+            ref={target}
+            onClick={() => setShow(!show)}
+          />
+        )}
       </p>
       <p
-        className={`date__box ${
-          Date.parse(todo?.date) < Date.now()
-            ? "overdue__date"
-            : "leftfordue__date"
-        }`}
+        className={`date__box
+        ${
+          todo?.date
+            ? Date.parse(todo?.date) < Date.now()
+              ? "overdue__date"
+              : "leftfordue__date"
+            : ""
+        }
+         `}
       >
         {todo?.date ? formattedDate(todo?.date) : "-"}
       </p>
