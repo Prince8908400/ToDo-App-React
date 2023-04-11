@@ -20,6 +20,9 @@ const TodoInput = ({
           Due date:
         </label>
       </div>
+      <label htmlFor="task" className="smtask">
+        Task:
+      </label>
       <Input
         id="task"
         type="search"
@@ -30,6 +33,9 @@ const TodoInput = ({
         onChange={(e) => setTask(e.target.value)}
         ref={inputRef}
       />
+      <label htmlFor="dateInput" className="smdate">
+        Due date:
+      </label>
       <Input
         id="dateInput"
         type="date"

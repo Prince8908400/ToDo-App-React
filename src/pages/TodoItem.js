@@ -22,7 +22,9 @@ const TodoItem = ({ todo, toggleTodoItem, updateTodoItem, handleShow }) => {
         onChange={() => toggleTodoItem(todo?.todo_id)}
         checked={todo?.completed ? true : false}
       />
-      <p className={`task ${todo?.completed ? "completed" : ""}`}>{todo?.task}</p>
+      <p className={`task truncate ${todo?.completed ? "completed" : ""}`}>
+        {todo?.task}
+      </p>
       <p
         className={`date__box ${
           Date.parse(todo?.date) < Date.now()

@@ -90,6 +90,7 @@ export const Todos = () => {
     setTodos(res);
     localStorage.setItem("todos", JSON.stringify(res));
     handleClose();
+    resetState();
     toast.success("Task deleted successfully.");
   };
 

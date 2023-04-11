@@ -54,9 +54,95 @@ input::-webkit-search-cancel-button:hover {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  max-width: 750px;
+  max-width: 765px;
 }
 
 .datelabel {
-  margin-right: 150px;
+  margin-right: 160px;
+}
+
+.smtask,
+.smdate {
+  display: none;
+}
+
+@media only screen and (max-width: 480px) {
+  #dateInput {
+    width: 100%;
+    margin: 0;
+  }
+
+  .user__request {
+    max-width: 100%;
+  }
+
+  .input_lbls {
+    display: none;
+  }
+
+  .smtask,
+  .smdate {
+    display: block;
+    max-width: 100%;
+    text-align: start;
+  }
+
+  .form__button {
+    margin: 10px 0;
+    padding: 6px 18px;
+  }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  #dateInput {
+    width: 100%;
+    margin: 0;
+  }
+
+  .user__request {
+    width: 100%;
+  }
+
+  .input_lbls {
+    display: none;
+  }
+
+  .smtask,
+  .smdate {
+    display: block;
+    max-width: 100%;
+    text-align: start;
+  }
+
+  .form__button {
+    margin: 10px 0;
+    padding: 6px 18px;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  #dateInput {
+    width: 100%;
+    margin: 0;
+  }
+
+  .user__request {
+    width: 100%;
+  }
+
+  .input_lbls {
+    display: none;
+  }
+
+  .smtask,
+  .smdate {
+    display: block;
+    max-width: 100%;
+    text-align: start;
+  }
+
+  .form__button {
+    margin: 10px 0;
+    padding: 6px 18px;
+  }
 }
