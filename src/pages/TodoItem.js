@@ -19,7 +19,8 @@ import Tooltip from "react-bootstrap/Tooltip";
 import { formattedDate, makeShortText } from "../utility/helper";
 
 const TodoItem = ({ todo, toggleTodoItem, updateTodoItem, handleShow }) => {
-  
+  const { todo_id, completed, task, date } = todo;
+
   const [show, setShow] = useState(false);
   const target = useRef(null);
 
@@ -28,12 +29,12 @@ const TodoItem = ({ todo, toggleTodoItem, updateTodoItem, handleShow }) => {
   };
 
   return (
-    <li key={todo?.todo_id}>
+    <li key={todo_id}>
       <Input
         type="checkbox"
         id="check"
-        onChange={() => toggleTodoItem(todo?.todo_id)}
-        checked={todo?.completed ? true : false}
+        onChange={() => toggleTodoItem(todo_id)}
+        checked={completed ? true : false}
       />
       <Overlay
         rootClose={true}
@@ -46,13 +47,13 @@ const TodoItem = ({ todo, toggleTodoItem, updateTodoItem, handleShow }) => {
       >
         {(props) => (
           <Tooltip id="overlay-example" {...props}>
-            {todo?.task}
+            {task}
           </Tooltip>
         )}
       </Overlay>
-      <p className={`task ${todo?.completed ? "completed" : ""}`}>
-        {makeShortText(todo?.task)}
-        {todo?.task?.length > 85 && (
+      <p className={`task ${completed ? "completed" : ""}`}>
+        {makeShortText(task)}
+        {task?.length > 85 && (
           <FontAwesomeIcon
             className="info__icon"
             icon={faInfoCircle}
@@ -64,25 +65,25 @@ const TodoItem = ({ todo, toggleTodoItem, updateTodoItem, handleShow }) => {
       <p
         className={`date__box
         ${
-          todo?.date
-            ? Date.parse(todo?.date) < Date.now()
+          date
+            ? Date.parse(date) < Date.now()
               ? "overdue__date"
               : "leftfordue__date"
             : ""
         }
          `}
       >
-        {todo?.date ? formattedDate(todo?.date) : "-"}
+        {date ? formattedDate(date) : "-"}
       </p>
       <FontAwesomeIcon
-        className={`editIcon ${todo?.completed ? "disabled" : ""}`}
+        className={`editIcon ${completed ? "disabled" : ""}`}
         icon={faEdit}
-        onClick={() => updateTodoItem(todo?.todo_id)}
+        onClick={() => updateTodoItem(todo_id)}
       />
       <FontAwesomeIcon
         className="deleteIcon"
         icon={faTrash}
-        onClick={() => handleShow(todo?.todo_id)}
+        onClick={() => handleShow(todo_id)}
       />
     </li>
   );

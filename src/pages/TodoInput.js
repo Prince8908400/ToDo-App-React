@@ -2,16 +2,17 @@ import React from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
 
-const TodoInput = ({
-  task,
-  setTask,
-  date,
-  setDate,
-  inputRef,
-  today,
-  selectedTodo,
-  saveTodo,
-}) => {
+const TodoInput = (props) => {
+  const {
+    task,
+    setTask,
+    date,
+    setDate,
+    inputRef,
+    today,
+    selectedTodo,
+    saveTodo,
+  } = props;
   return (
     <form onSubmit={saveTodo} autoComplete="off">
       <div className="input_lbls">
