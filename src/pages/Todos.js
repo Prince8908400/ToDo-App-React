@@ -1,28 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+
+// components
 import { AllTodos } from "./AllTodos";
+import TodoInput from "./TodoInput";
+import CustomModal from "../components/CustomModal";
+
+// toast
 import { toast } from "react-toastify";
 
+// css
+import "../assets/css/form.style.css";
+
 export const Todos = () => {
+  const inputRef = useRef(null);
   const [todos, setTodos] = useState([]);
   const [selectedTodo, setSelectedTodo] = useState(null);
   const [task, setTask] = useState("");
   const [date, setDate] = useState("");
   const today = new Date().toISOString().substr(0, 10);
+  const [todoId, setTodoId] = useState("");
+
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
+    inputRef.current.focus();
     if (localStorage.getItem("todos")) {
       setTodos(JSON.parse(localStorage.getItem("todos")));
     }
   }, []);
 
+  const handleClose = () => {
+    setShow(false);
+    setTodoId("");
+  };
+
+  const handleShow = (todoId) => {
+    setShow(true);
+    setTodoId(todoId);
+  };
+
   const saveData = (newTodos) => {
-    localStorage.setItem(
-      "todos",
-      JSON.stringify([
-        ...JSON.parse(localStorage.getItem("todos") || "[]"),
-        newTodos,
-      ])
-    );
+    const existingTodos = JSON.parse(localStorage.getItem("todos") || "[]");
+    const updatedTodos = [...existingTodos, newTodos];
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+  };
+
+  const resetState = () => {
+    setTask("");
+    setDate("");
   };
 
   const saveTodo = (event) => {
@@ -37,7 +62,7 @@ export const Todos = () => {
       });
       setTodos(updatedTodos);
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
-      // toast.success("Task updated successfully.");
+      toast.success("Task updated successfully.");
       setSelectedTodo(null);
     } else {
       const payload = {
@@ -48,10 +73,9 @@ export const Todos = () => {
       };
       setTodos([...todos, payload]);
       saveData(payload);
-      // toast.success("Task created successfully.");
+      toast.success("Task created successfully.");
     }
-    setTask("");
-    setDate("");
+    resetState();
   };
 
   const updateTodoItem = (todoId) => {
@@ -61,12 +85,18 @@ export const Todos = () => {
     setDate(todo.date);
   };
 
-  const deleteTodoItem = (todoId) => {
+  const deleteTodoItem = () => {
     const res = todos.filter((item) => item.todo_id !== todoId);
     setTodos(res);
     localStorage.setItem("todos", JSON.stringify(res));
-    // toast.success("Task deleted successfully.");
+    handleClose();
+    toast.success("Task deleted successfully.");
   };
+
+  const modalActions = [
+    { label: "Close", variant: "secondary", onClick: handleClose },
+    { label: "Delete", variant: "danger", onClick: deleteTodoItem },
+  ];
 
   function toggleTodoItem(taskId) {
     let updatedTodos = todos.map((task) => {
@@ -81,61 +111,28 @@ export const Todos = () => {
 
   return (
     <>
-      <form onSubmit={saveTodo}>
-        <label htmlFor="todo">Task:</label>
-        <input
-          id="task"
-          type="text"
-          name="task"
-          placeholder="✍️ Take a note..."
-          value={task}
-          onChange={(e) => setTask(e.target.value)}
-        />
-        <label htmlFor="myDate">Due Date:</label>
-        <input
-          id="myDate"
-          type="date"
-          name="due_date"
-          value={date}
-          min={today}
-          onChange={(e) => setDate(e.target.value)}
-          disabled={task === "" ? true : false}
-        />
-        <button
-          style={{
-            backgroundColor: "#9b59b6",
-            color: "#fff",
-            border: "1px solid #9b59b6",
-            padding: "8px",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-          type="submit"
-          disabled={task === "" ? true : false}
-        >
-          {selectedTodo ? (
-            <img
-              src={require("../assets/images/save_icon.png")}
-              alt="add__icon"
-              height="14px"
-              width="14px"
-            />
-          ) : (
-            <img
-              src={require("../assets/images/add_icon.png")}
-              alt="add__icon"
-              height="14px"
-              width="14px"
-            />
-          )}
-          {selectedTodo ? "Update" : "Add"}
-        </button>
-      </form>
+      <TodoInput
+        task={task}
+        setTask={setTask}
+        date={date}
+        setDate={setDate}
+        inputRef={inputRef}
+        today={today}
+        selectedTodo={selectedTodo}
+        saveTodo={saveTodo}
+      />
+      <CustomModal
+        show={show}
+        handleClose={handleClose}
+        title="Are you sure?"
+        body="Do you really want to delete these records? This process cannot be undone."
+        actions={modalActions}
+      />
       <AllTodos
         todos={todos}
+        handleShow={handleShow}
         toggleTodoItem={toggleTodoItem}
         updateTodoItem={updateTodoItem}
-        deleteTodoItem={deleteTodoItem}
       />
     </>
   );

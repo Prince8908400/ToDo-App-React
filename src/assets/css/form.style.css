@@ -1,0 +1,62 @@
+.user__request {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  width: 530px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+#dateInput {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.form__button img {
+  object-fit: cover;
+  margin-right: 4px;
+}
+
+.form__button {
+  background-color: #9b59b6;
+  color: #fff;
+  border: 1px solid #9b59b6;
+  padding: 5px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  position: relative;
+}
+
+input::-webkit-search-cancel-button:after {
+  content: "X";
+  position: absolute;
+  tranform: translate(-50%, -50%);
+}
+
+input::-webkit-search-cancel-button:hover {
+  cursor: pointer;
+}
+
+.input_lbls {
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 750px;
+}
+
+.datelabel {
+  margin-right: 150px;
+}

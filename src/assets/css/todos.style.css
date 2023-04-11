@@ -1,8 +1,9 @@
 .todo__list {
   list-style: none;
   color: black;
-  max-width: 100%;
+  max-width: 770px;
   margin: 0 auto;
+  padding-left: 0px;
 }
 
 .todo__list li {
@@ -42,6 +43,7 @@
   border-left: 1px solid gray;
   border-right: 1px solid gray;
   text-align: justify;
+  margin-bottom: 0;
 }
 
 .todo__list li {
