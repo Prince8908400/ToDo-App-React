@@ -1,23 +1,22 @@
-import { useState, createContext } from "react";
+import React, { useState, createContext } from "react";
 
-export const TabContext = createContext({
-  tab: 1,
-  handleTabChange: () => {},
-});
+export const TabContext = createContext();
 
 const ContextProvider = ({ children }) => {
-  const [active, setActive] = useState(1);
+  const [activeTabs, setActiveTabs] = useState({});
 
-  const handleTabChange = (id) => {
-    setActive(id);
+  const handleTabChange = (id, tab) => {
+    setActiveTabs((prevActiveTabs) => ({
+      ...prevActiveTabs,
+      [id]: tab,
+    }));
   };
 
-  const value = {
-    tab: active,
-    handleTabChange,
-  };
-
-  return <TabContext.Provider value={value}>{children}</TabContext.Provider>;
+  return (
+    <TabContext.Provider value={{ activeTabs, handleTabChange }}>
+      {children}
+    </TabContext.Provider>
+  );
 };
 
 export default ContextProvider;
