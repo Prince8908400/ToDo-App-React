@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { TabContext } from "../../store/tab-context";
 
@@ -6,26 +6,30 @@ import { TabContext } from "../../store/tab-context";
 import { StyledTab, TabItem } from "./Tab.style";
 
 function Tabs({ children, variant, id, ...rest }) {
-  const { activeTabs, handleTabChange } = useContext(TabContext);
+  const { activeTabs, handleTabChange, setInitialTabs } = useContext(TabContext);
 
-  const handleClick = (event, tabId) => {
+  useEffect(() => {
+    setInitialTabs(prev => new Set([...prev, id]));
+  }, []);
+
+  const handleClick = (tabId) => {
     handleTabChange(id, tabId);
   };
 
-  const activeTab = activeTabs[id] || 1;
+  const activeTab = activeTabs[id] || 0;
 
   return (
     <StyledTab {...rest} variant={variant}>
-      {React.Children.map(children, (child) => {
+      {React.Children.map(children, (child, index) => {
         if (React.isValidElement(child)) {
-          const { id: tabId, title, disabled } = child.props;
+          const { title, disabled } = child.props;
           return (
             <TabItem
-              id={tabId}
-              className={activeTab === tabId ? "active" : ""}
+              id={index}
+              className={activeTab === index ? "active" : ""}
               disabled={disabled}
               variant={variant}
-              onClick={(event) => handleClick(event, tabId)}
+              onClick={() => handleClick(index)}
             >
               {title}
             </TabItem>
@@ -43,4 +47,5 @@ Tabs.propTypes = {
   id: PropTypes.string.isRequired,
 };
 
+export { TabItem };
 export default Tabs;

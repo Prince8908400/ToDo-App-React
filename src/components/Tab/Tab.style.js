@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const StyledTab = styled.ul`
   ${({
-    theme: { colors, space, borderRadius, fontWeight },
-    variant,
-    textColor,
-    orientation,
-  }) => `
-  max-width: fit-content;
+  theme: { colors, space, borderRadius, fontWeight },
+  variant,
+  textColor,
+  orientation,
+}) => `
+  max-width: max(35%, 500px);
   margin: 0 auto;
   display: flex;
   flex-direction: ${orientation === "vertical" ? "column" : "row"};
@@ -25,10 +25,11 @@ export const StyledTab = styled.ul`
 
 export const TabItem = styled.li`
   ${({
-    disabled,
-    variant,
-  }) => `
+  disabled,
+  variant,
+}) => `
   max-width: 100%;
+  flex: 1;
   margin: 4px;
   padding: 8px 24px;
   list-style: none;
@@ -52,4 +53,20 @@ export const TabItem = styled.li`
     font-weight: 600;
   }
 `}
+`;
+
+export const TabContentWrapper = styled.div`
+  ${({
+    space
+}) => `
+  margin: 10px;
+  `}
+`;
+
+export const TabPanel = styled.div`
+  ${({
+    space
+}) => `
+  margin: 10px;
+  `}
 `;
