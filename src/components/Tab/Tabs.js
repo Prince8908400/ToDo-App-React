@@ -1,15 +1,15 @@
 import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { TabContext } from "../../store/tab-context";
-
-// styles
 import { StyledTab, TabItem } from "./Tab.style";
 
 function Tabs({ children, variant, id, ...rest }) {
-  const { activeTabs, handleTabChange, setInitialTabs } = useContext(TabContext);
+  const { activeTabs, handleTabChange, setInitialTabs } = useContext(
+    TabContext
+  );
 
   useEffect(() => {
-    setInitialTabs(prev => new Set([...prev, id]));
+    setInitialTabs(id, 0);
   }, []);
 
   const handleClick = (tabId) => {
@@ -43,8 +43,8 @@ function Tabs({ children, variant, id, ...rest }) {
 
 Tabs.propTypes = {
   children: PropTypes.node.isRequired,
-  variant: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  variant: PropTypes.string,
+  id: PropTypes.string.isRequired
 };
 
 export { TabItem };
